@@ -2,6 +2,7 @@ import sharp from 'sharp';
 import hasha from 'hasha';
 import * as path from 'path';
 import { ensureDirSync } from 'fs-extra';
+import * as url from 'url';
 
 import { promiseRunner } from '$lib/utils.js';
 
@@ -21,7 +22,11 @@ const options = {
 	sizes: [320, 640, 768, 1024, 1280, 1920]
 };
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const root = process.cwd();
+
+console.log(root, __dirname);
+
 const asset = (file = '') => path.join(root, 'static', 'assets', file);
 
 const formatMap = {
@@ -72,7 +77,10 @@ const fileConstruct = (file, hash, { suffix = null, ext = null } = {}) => {
  * @returns
  */
 const saveFile = (node, target) => {
-	return node.toFile(asset(target)).then(() => `/assets/${target}`);
+	return node.toFile(asset(target)).then(() => {
+		console.log(`✅ Generated: ${asset(target)}`);
+		return `/assets/${target}`;
+	});
 };
 
 /**
@@ -116,13 +124,13 @@ const convertSource = async (src, _node, format) => {
 
 	const files = await Promise.all(
 		sizes.map((size) => {
-			return saveFile(
-				node.resize(size),
-				fileConstruct(src, hash, {
-					suffix: size.toString(),
-					ext: format
-				})
-			).then((target) => [target, size]);
+			const target = fileConstruct(src, hash, {
+				suffix: size.toString(),
+				ext: format
+			});
+			return saveFile(node.resize(size), target).then((target) => {
+				return [target, size];
+			});
 		})
 	);
 
