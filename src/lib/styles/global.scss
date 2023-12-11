@@ -1,0 +1,138 @@
+@import 'normalize.css/normalize';
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+:root {
+	--font-family-serif: serif;
+	--font-family-sans-serif: sans-serif;
+
+	--font-size-small: 10px;
+	--font-size-medium: 18px;
+	--font-size-large: 24px;
+
+	--page-padding: 20px;
+
+	--color-bad: red;
+}
+
+html,
+body {
+	background-color: silver;
+	line-height: 1.4;
+}
+
+body {
+	padding: var(--page-padding);
+}
+
+h1,
+h2 {
+	font-family: var(--font-family-sans-serif);
+	font-size: var(--font-size-medium);
+	font-weight: 600;
+}
+
+.btn {
+	display: inline-block;
+
+	background-color: yellow;
+
+	color: blue;
+
+	border-radius: 5px;
+
+	border: none;
+	padding: 0.25rem 0.5rem;
+
+	font-family: var(--font-family-serif);
+
+	cursor: pointer;
+
+	text-decoration: none;
+
+	&:not([disabled]):not(.disabled):hover,
+	&:not([disabled]):not(.disabled):focus-visible {
+		color: white;
+		background-color: blue;
+	}
+
+	&[disabled],
+	&.disabled {
+		background-color: gray;
+		color: silver;
+
+		text-decoration: line-through;
+	}
+}
+
+.newsletter-section {
+	display: flex;
+
+	flex-direction: column;
+
+	align-items: center;
+
+	padding-bottom: 4rem;
+
+	hr {
+		width: 100%;
+
+		margin: 2rem 0;
+	}
+}
+
+a {
+	color: blue;
+
+	@include hover {
+		color: yellow;
+	}
+}
+
+img {
+	max-width: 100%;
+}
+
+main.content {
+	margin: 4rem 0;
+}
+
+.block {
+	max-width: 1280px;
+
+	&:not(:last-child) {
+		margin-bottom: 4rem;
+	}
+
+	@include tablet {
+		width: 65%;
+		max-width: 768px;
+	}
+}
+
+/**
+Error Page
+*/
+.mess {
+	display: grid;
+
+	grid-template-columns: repeat(20, 1fr);
+	grid-template-rows: repeat(20, 1fr);
+
+	span {
+		// white-space: nowrap;
+		text-align: center;
+	}
+
+	@for $i from 1 through 20 {
+		span:nth-child(#{$i}) {
+			grid-column: random(20);
+			grid-row: random(20);
+			animation-delay: $i * 0.1s;
+		}
+	}
+}
