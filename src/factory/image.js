@@ -5,6 +5,7 @@ import { ensureDirSync } from 'fs-extra';
 import * as url from 'url';
 
 import { promiseRunner } from '$lib/utils.js';
+import { dev } from '$app/environment';
 
 // A loose cheap cache atm
 const imageCache = {};
@@ -25,9 +26,13 @@ const options = {
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const root = process.cwd();
 
-console.log(root, __dirname);
+const asset = (file = '') => {
+	if (dev) {
+		return path.join(root, 'static', 'assets', file);
+	}
 
-const asset = (file = '') => path.join(root, 'static', 'assets', file);
+	return path.join(root, 'build', 'assets', file);
+};
 
 const formatMap = {
 	jpeg: 'image/jpeg',
@@ -137,7 +142,7 @@ const convertSource = async (src, _node, format) => {
 	return constructNode(files, getMimeType(format ?? inferredFormat));
 };
 
-const convertImageDictionary = async (src, dev = false) => {
+const convertImageDictionary = async (src) => {
 	const { format, width, height } = await sharp(src).metadata();
 	const { dominant } = await sharp(src).stats();
 
@@ -184,10 +189,9 @@ const getAbsolutePath = (img) => {
 /**
  *
  * @param {string} text
- * @param {boolean} [dev]
  * @returns {Promise<string>}
  */
-export const searchAndReplace = async (text, dev = false) => {
+export const searchAndReplace = async (text) => {
 	ensureDirSync(asset());
 
 	const matches = [...text.matchAll(imageRegex)];
@@ -201,7 +205,7 @@ export const searchAndReplace = async (text, dev = false) => {
 
 		const imageKey = imageKeys.find((k) => k.endsWith(url));
 
-		const imageDict = await convertImageDictionary(getAbsolutePath(images[imageKey]), dev);
+		const imageDict = await convertImageDictionary(getAbsolutePath(images[imageKey]));
 
 		localText = localText.replace(
 			`~@${idx}@~`,

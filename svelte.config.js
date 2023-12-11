@@ -3,7 +3,7 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte'],
+	extensions: ['.md', '.svelte'],
 	kit: {
 		alias: {
 			$data: 'src/data'
@@ -20,7 +20,10 @@ const config = {
 		// {
 		// 	name: 'JTIndustry',
 		// 	markup: async ({ content, filename }) => {
-		// 		console.log('ok', filename);
+		// 		console.log('\nhey playa', filename, '\n');
+		// 		if (filename.endsWith('.md')) {
+		// 			console.log('HEYYO', content);
+		// 		}
 		// 		return;
 		// 	}
 		// },
