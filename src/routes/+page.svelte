@@ -22,3 +22,7 @@
 		<p>I am an associate lecturer at Ual <InlineThumbnail image="/images/large.jpg" /></p>
 	</div>
 </main>
+
+<svelte:head>
+	<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" async defer></script>
+</svelte:head>

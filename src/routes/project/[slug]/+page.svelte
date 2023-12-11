@@ -15,6 +15,7 @@
 
 <main class="content">
 	<Blocks items={data.metadata.blocks} />
+	<Markdown source={data.content} />
 </main>
 
 <style lang="scss">

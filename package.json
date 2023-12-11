@@ -34,7 +34,6 @@
 	"type": "module",
 	"dependencies": {
 		"marked": "^5.1.2",
-		"netlify-cms": "^2.10.192",
 		"normalize.css": "^8.0.1",
 		"svelte-markdown": "^0.4.0"
 	}

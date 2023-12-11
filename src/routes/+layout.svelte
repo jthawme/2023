@@ -1,6 +1,6 @@
 <script>
 	import { navigating } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 
 	import BuxCta from '$lib/components/BuxCta.svelte';
 	import NewsletterSignup from '$lib/components/NewsletterSignup.svelte';
@@ -10,6 +10,10 @@
 	import '$lib/styles/global.scss';
 	import { getPersistedValue } from '$lib/utils.js';
 	import Seo from '$lib/components/SEO.svelte';
+
+	export let data;
+
+	setContext('seo', data.metadata.seo);
 
 	onMount(() => {
 		bux.init(getPersistedValue(BUX_KEY, 0, (val) => parseInt(val)));
@@ -29,7 +33,7 @@
 
 <Seo />
 
-<PageHeader />
+<PageHeader navigation={data.metadata.navigation} />
 
 <slot />
 
@@ -39,7 +43,3 @@
 	<hr />
 	<NewsletterSignup />
 </section>
-
-<svelte:head>
-	<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" async defer></script>
-</svelte:head>

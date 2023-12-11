@@ -1,10 +1,98 @@
+local_backend: true
+
 backend:
   name: git-gateway
   branch: main
-local_backend: true
 media_folder: 'src/data/uploads'
+public_folder: '/uploads'
 
 collections:
+  - label: 'Pages'
+    name: 'pages'
+    files:
+      - label: 'Meta Info'
+        name: 'meta'
+        file: 'src/data/meta.md'
+        fields:
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - label: Site Title
+                name: title
+                widget: string
+              - label: Site Description
+                name: description
+                widget: text
+
+          - label: Display Title
+            name: display_title
+            widget: string
+          - label: Navigation
+            name: navigation
+            widget: list
+            fields:
+              - label: Text
+                name: text
+                widget: string
+              - label: Link
+                name: link
+                widget: string
+              - label: Open in new tab
+                name: new_tab
+                widget: boolean
+                default: false
+                required: false
+
+      - label: 'About Page'
+        name: 'about'
+        file: 'src/data/about.md'
+        fields:
+          - label: Title
+            name: title
+            widget: string
+          - label: 'Body'
+            name: 'body'
+            widget: 'markdown'
+
+      - label: 'Projects Page'
+        name: 'projects'
+        file: 'src/data/projects.md'
+        fields:
+          - label: Sections
+            name: sections
+            widget: list
+            fields:
+              - label: Title
+                name: title
+                widget: string
+              - label: Projects
+                name: projects
+                widget: list
+                fields:
+                  - label: Relation
+                    name: relation
+                    widget: relation
+                    collection: project
+                    search_fields: ['title']
+                    value_field: '{{slug}}'
+                    display_fields: ['title']
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Tags
+                    name: tags
+                    widget: list
+                    fields:
+                      - label: Text
+                        name: text
+                        widget: string
+                      - label: Theme
+                        name: theme
+                        widget: select
+                        options: ['primary', 'secondary', 'tertiary']
+                        default: primary
+
   - name: 'project'
     label: 'Project'
     folder: 'src/data/projects'
@@ -23,3 +111,26 @@ collections:
       - label: 'Body'
         name: 'body'
         widget: 'markdown'
+      - label: 'Blocks'
+        name: 'blocks'
+        widget: 'list'
+        types:
+          - label: 'Image'
+            name: 'image'
+            widget: object
+            summary: '{{fields.image}}'
+            fields:
+              - label: Image
+                name: image
+                widget: image
+              - label: Footnote
+                name: footnote
+                widget: string
+                required: false
+          - label: 'Text'
+            name: 'text'
+            widget: object
+            fields:
+              - label: content
+                name: text
+                widget: markdown

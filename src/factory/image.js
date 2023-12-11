@@ -17,7 +17,7 @@ const images = import.meta.glob('../data/uploads/**/*.{png,jpg,jpeg,PNG,JPEG,web
 const imageKeys = Object.keys(images);
 
 // Regex to search any text string for any signs of image paths
-const imageRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif)(\?\S+)?)/gi;
+const imageRegex = /([a-z\-_0-9\/\:\.\%]*\.(jpg|jpeg|png|gif)(\?\S+)?)/gi;
 
 const options = {
 	sizes: [320, 640, 768, 1024, 1280, 1920]
@@ -198,6 +198,11 @@ export const searchAndReplace = async (text) => {
 	let localText = text;
 
 	await promiseRunner(matches, async (match, idx) => {
+		if (match[1].startsWith('http')) {
+			localText = localText.replace(match[1], `![](${match[1]})`);
+			return;
+		}
+
 		localText = localText.replace(match[1], `~@${idx}@~`);
 
 		const [url, paramString = ''] = match[1].split('?');

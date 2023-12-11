@@ -1,14 +1,20 @@
 <script>
+	import { getContext } from 'svelte';
+
 	export let title = '';
-	export let defaultTitle = 'JT';
-	export let description = 'The OFFICIAL website of artist Jonny Thaw. Every other site is a fake!';
+	export let description = '';
+
+	let defaultSeo = getContext('seo');
+
+	$: defaultTitle = defaultSeo.title;
+	$: defaultDescription = defaultSeo.description;
 
 	$: renderedTitle = title ? `${title} – ${defaultTitle}` : defaultTitle;
 </script>
 
 <svelte:head>
 	<title>{renderedTitle}</title>
-	<meta name="description" content={description} />
+	<meta name="description" content={description || defaultDescription} />
 
 	<slot />
 </svelte:head>

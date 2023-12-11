@@ -1,18 +1,15 @@
 <script>
-	let links = [
-		{
-			to: '/work',
-			label: 'Work'
-		},
-		{
-			to: '/about',
-			label: 'About'
-		}
-		// {
-		// 	to: '/newsletter',
-		// 	label: 'Newsletter'
-		// }
-	];
+	export let navigation = [];
+
+	$: links = navigation.map((item) => ({
+		text: item.text,
+		href: item.link,
+		props: item.new_tab
+			? {
+					target: '_blank'
+			  }
+			: {}
+	}));
 </script>
 
 <header>
@@ -20,7 +17,7 @@
 
 	<ul>
 		{#each links as link}
-			<li><a href={link.to}>{link.label}</a></li>
+			<li><a href={link.href} {...link.props}>{link.text}</a></li>
 		{/each}
 	</ul>
 </header>

@@ -3,9 +3,10 @@
 
 	import SvelteMarkdown from 'svelte-markdown';
 	import { marked } from 'marked';
+	import { convertImageShortcode } from '../../factory/image.utils.js';
+
 	import MarkdownImage from './Markdown/Image.svelte';
 	import InlineThumbnail from './Common/InlineThumbnail.svelte';
-	import { convertImageShortcode } from '../../factory/image.utils.js';
 
 	export let source;
 
@@ -16,7 +17,7 @@
 		start(src) {
 			return src.match(/\[\[IMAGE/)?.index;
 		},
-		tokenizer(src) {
+		tokenizer(src, tokens) {
 			return convertImageShortcode(src);
 		}
 	};
