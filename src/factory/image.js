@@ -8,7 +8,7 @@ import { promiseRunner } from '$lib/utils.js';
 // A loose cheap cache atm
 const imageCache = {};
 
-const images = import.meta.glob('../data/images/**/*.{png,jpg,jpeg,PNG,JPEG,webp}', {
+const images = import.meta.glob('../data/uploads/**/*.{png,jpg,jpeg,PNG,JPEG,webp}', {
 	eager: true,
 	as: 'url'
 });
