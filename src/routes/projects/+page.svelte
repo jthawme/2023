@@ -11,7 +11,7 @@
 		<ul>
 			{#each section.projects as link}
 				<li>
-					<a href={`/project/${link.relation}`}
+					<a href={`/project/${link.relation.slug}`}
 						>{link.title}<span class="tags"
 							>{#each link.tags as tag}<Pill theme={tag.theme}>{tag.text}</Pill>{/each}</span
 						></a

@@ -5,6 +5,12 @@
  * @returns {string | false}
  */
 export const dataLookup = (key, keys = []) => {
-	const lookups = [key, `../${key}`];
-	return lookups[lookups.findIndex((l) => keys.includes(l))] ?? false;
+	const lookups = [`../${key}`, key];
+	return (
+		keys[
+			keys.findIndex((l) => {
+				return !!lookups.some((k) => l.endsWith(k));
+			})
+		] ?? false
+	);
 };

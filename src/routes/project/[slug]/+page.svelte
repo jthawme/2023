@@ -1,14 +1,21 @@
 <script>
 	import Blocks from '$lib/components/Blocks.svelte';
 	import Markdown from '$lib/components/Markdown.svelte';
-	import Image from '$lib/components/Markdown/Image.svelte';
 
 	export let data;
+
+	/**
+	 *
+	 * @param {Date} date
+	 */
+	function year(date) {
+		return date.getFullYear();
+	}
 </script>
 
 <header>
 	<h1>{data.metadata.title}</h1>
-	<span class="year">{data.metadata.date}</span>
+	<span class="year">{year(data.metadata.date)}</span>
 </header>
 
 <hr />
