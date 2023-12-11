@@ -31,7 +31,7 @@ const asset = (file = '') => {
 		return path.join(root, 'static', 'assets', file);
 	}
 
-	return path.join(root, 'build', 'assets', file);
+	return path.join(root, '.svelte-kit', 'output', 'client', 'assets', file);
 };
 
 const formatMap = {
